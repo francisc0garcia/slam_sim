@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- launch Teleop - joy node -->
+    <include file="$(find teleop_twist_joy)/launch/teleop.launch" />
+
+<!-- launch Teleop - Keyboard node
+    <node name="teleop_twist_keyboard." pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" required="false" />
+-->
+
+    <!-- launch gazebo world -->
+    <include file="$(find slam_sim)/launch/driver_launch_gazebo_map.launch"/>
+
+    <!-- launch Robot -->
+    <include file="$(find slam_sim)/launch/driver_launch_youbot.launch"/>
+
+    <!-- launch robot navigation simulator -->
+    <include file="$(find youbot_navigation_local)/launch/move_base_local.launch" />
+
+    <!-- launch gmapping node
+    <include file="$(find gmapping)/launch/driver_slam_gmapping.launch" />
+    -->
+
+    <!-- launch rviz -->
+    <node name="rviz" pkg="rviz" type="rviz"
+          args="-d $(find slam_sim)/config/rviz_slam_sim.rviz" required="false" />
+
+    <!-- launch rqt -->
+    <node name="slam_sim_rqt_perspective" pkg="rqt_gui" type="rqt_gui"
+          args="--perspective-file  $(find slam_sim)/config/rqt_slam_sim.perspective" required="false" />
+
+    <!-- launch Real Robot
+    roslaunch youbot_navigation_common bringup_navigation.launch
+    <include file="$(find youbot_navigation_common)/launch/bringup_navigation.launch"/>
+    -->
+
+</launch>

@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<launch>
+    <env name="GAZEBO_MODEL_PATH" value="$(find slam_sim)/models"/>
+
+    <arg name="map_name" default="test_map_1.world"/>
+
+    <!-- launch Teleop - joy node -->
+    <include file="$(find teleop_twist_joy)/launch/teleop.launch" />
+
+    <!-- launch gazebo world-->
+    <include file="$(find slam_sim)/launch/driver_launch_gazebo_map.launch">
+        <arg name="world_name" value="$(find slam_sim)/config/worlds/$(arg map_name)"/>
+    </include>
+
+    <!-- launch Robot -->
+    <include file="$(find slam_sim)/launch/driver_launch_youbot.launch">
+        <arg name="init_pos_x" value="0.0"/>
+        <arg name="init_pos_y" value="0.0"/>
+        <arg name="init_pos_z" value="0.0"/>
+    </include>
+
+    <!-- launch Cartographer node -->
+    <node name="cartographer_node" pkg="cartographer_ros"
+          type="cartographer_node" args="
+          -configuration_directory $(find slam_sim)/config/cartographer
+          -configuration_basename youbot_cartographer.lua"
+          output="screen">
+        <remap from="scan" to="/base_scan" />
+        <remap from="map" to="map_carto"/>
+    </node>
+
+    <!-- launch gmapping node -->
+    <include file="$(find slam_sim)/launch/driver_slam_gmapping.launch" />
+
+
+    <!-- launch rviz -->
+    <node name="rviz" pkg="rviz" type="rviz"
+          args="-d $(find slam_sim)/config/rviz_slam_sim.rviz" required="false" />
+
+    <!-- launch rqt -->
+    <node name="slam_sim_rqt_perspective" pkg="rqt_gui" type="rqt_gui"
+          args="--perspective-file  $(find slam_sim)/config/rqt_slam_sim.perspective" />
+</launch>

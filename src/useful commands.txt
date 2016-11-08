@@ -1,0 +1,57 @@
+-- Check dependencies
+
+rosdep install --from-paths src --ignore-src src/youbot_description --rosdistro=${ROS_DISTRO} -y
+
+
+-- Launch slam_sim from PC
+
+cd ~/Documents/UNI/MasterThesis/code/slam_ws
+source devel_isolated/setup.bash
+roslaunch slam_sim launch_sim.launch
+
+roslaunch slam_sim launch_sim_gmapping.launch map_name:=test_map_1.world
+roslaunch slam_sim launch_sim_gmapping.launch map_name:=test_map_2.world
+
+roslaunch slam_sim launch_sim_cartographer.launch map_name:=test_map_1.world
+roslaunch slam_sim launch_sim_cartographer.launch map_name:=test_map_2.world
+
+roslaunch slam_sim launch_sim_both_carto_gmap.launch map_name:=test_map_1.world
+roslaunch slam_sim launch_sim_both_carto_gmap.launch map_name:=test_map_2.world
+
+
+-- Launch cartographer
+roslaunch cartographer_ros demo_backpack_2d.launch bag_filename:=${HOME}/Downloads/cartographer_paper_deutsches_museum.bag
+roslaunch cartographer_ros demo_backpack_3d.launch bag_filename:=${HOME}/Downloads/cartographer_3d_deutsches_museum.bag
+roslaunch cartographer_ros demo_revo_lds.launch bag_filename:=${HOME}/Downloads/cartographer_paper_revo_lds.bag
+roslaunch cartographer_ros demo_pr2.launch bag_filename:=${HOME}/Downloads/2011-09-15-08-32-46.bag
+
+
+
+-- kill all gazebo
+sudo killall gzserver gzclient
+
+
+- Allow any user to use joystick
+sudo chmod a+rw /dev/input/js0
+
+/dev/ttyAMA0
+
+- remove password with sudo
+edit:               sudo nano /etc/sudoers
+add to end file:    odroid ALL=(ALL) NOPASSWD: ALL
+
+- set GCC 5 for ubuntu 16.04
+export CC=/usr/bin/gcc-5
+export CXX=/usr/bin/g++-5
+
+- monitor RAM memory
+watch -n 5 free -m
+
+- Fix NTFS problem
+sudo ntfsfix /dev/mmcblk0p1
+
+-- check and add to hearder <robot> of .xacro files:
+xmlns:xacro="http://ros.org/wiki/xacro"
+
+
+
