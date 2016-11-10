@@ -1,0 +1,9 @@
+- problem with etherCAT slaves:
+
+kuka youbot uses for etherCAT the same eth0, so we can not connect any router to this port.
+we will loose acce to ethercat slaves.
+
+use wifi adapters instead.
+
+
+

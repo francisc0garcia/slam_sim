@@ -53,5 +53,9 @@ sudo ntfsfix /dev/mmcblk0p1
 -- check and add to hearder <robot> of .xacro files:
 xmlns:xacro="http://ros.org/wiki/xacro"
 
+- check EtherCAT slaves:
+sudo ~/slam_youbot/drivers/SOEM/install/bin/slaveinfo eth0
+
+
 
 
