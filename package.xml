@@ -16,6 +16,10 @@
     <build_depend>youbot_description</build_depend>
     <build_depend>gazebo_ros</build_depend>
     <build_depend>robot_state_publisher</build_depend>
+    <build_depend>youbot_driver</build_depend>
+    <build_depend>geometry_msgs</build_depend>
+    <build_depend>sensor_msgs</build_depend>
+    <build_depend>dynamic_reconfigure</build_depend>
 
     <run_depend>xacro</run_depend>
     <run_depend>roscpp</run_depend>
@@ -24,10 +28,13 @@
     <run_depend>youbot_description</run_depend>
     <run_depend>gazebo_ros</run_depend>
     <run_depend>robot_state_publisher</run_depend>
-
+    <run_depend>youbot_driver</run_depend>
     <run_depend>youbot_gazebo_control</run_depend>
     <run_depend>youbot_gazebo_robot</run_depend>
     <run_depend>youbot_gazebo_worlds</run_depend>
+    <run_depend>geometry_msgs</run_depend>
+    <run_depend>sensor_msgs</run_depend>
+    <run_depend>dynamic_reconfigure</run_depend>
 
     <!-- The export tag contains other, unspecified, tags -->
     <export>

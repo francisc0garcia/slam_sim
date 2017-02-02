@@ -5,7 +5,7 @@ rosdep install --from-paths src --ignore-src src/youbot_description --rosdistro=
 
 -- Launch slam_sim from PC
 
-cd ~/Documents/UNI/MasterThesis/code/slam_ws
+cd ~/Documents/MasterThesis/code/slam_ws
 source devel_isolated/setup.bash
 roslaunch slam_sim launch_sim.launch
 
@@ -25,11 +25,45 @@ roslaunch cartographer_ros demo_backpack_3d.launch bag_filename:=${HOME}/Downloa
 roslaunch cartographer_ros demo_revo_lds.launch bag_filename:=${HOME}/Downloads/cartographer_paper_revo_lds.bag
 roslaunch cartographer_ros demo_pr2.launch bag_filename:=${HOME}/Downloads/2011-09-15-08-32-46.bag
 
+-- Launch MRPT
 
+Localization:
+roslaunch mrpt_localization demo.launch
+
+SLAM:
+roslaunch mrpt_icp_slam_2d icp_slam.launch
+roslaunch mrpt_icp_slam_2d icp_slam_rawlog.launch
+roslaunch mrpt_rbpf_slam rbpf_slam.launch
+
+-- Launch hector mapping
+
+roslaunch hector_slam_launch tutorial.launch
+rosbag play Team_Hector_MappingBox_RoboCup_2011_Rescue_Arena.bag  --clock
+
+
+
+
+-- Launch PC
+cd Documents/UNI/MasterThesis/code/slam_ws/
+source devel_isolated/setup.bash
+export ROS_IP=192.168.0.206
+export ROS_MASTER_URI=http://192.168.0.208:11311
+roslaunch slam_sim launch_PC_youbot.launch
+
+-- Launch KUKA youbot
+sudo service ethercat stop
+cd ~/slam_youbot/slam_ws
+source devel_isolated/setup.bash
+export ROS_IP=192.168.0.208
+roslaunch slam_sim launch_youbot_real.launch
+
+--Compile on kuka youbot
+cd ~/slam_youbot/slam_ws
+catkin_make_isolated
+sudo setcap cap_net_raw+ep devel_isolated/youbot_driver_ros_interface/lib/youbot_driver_ros_interface/youbot_driver_ros_interface
 
 -- kill all gazebo
 sudo killall gzserver gzclient
-
 
 - Allow any user to use joystick
 sudo chmod a+rw /dev/input/js0
@@ -44,17 +78,24 @@ add to end file:    odroid ALL=(ALL) NOPASSWD: ALL
 export CC=/usr/bin/gcc-5
 export CXX=/usr/bin/g++-5
 
-- monitor RAM memory
-watch -n 5 free -m
-
-- Fix NTFS problem
-sudo ntfsfix /dev/mmcblk0p1
 
 -- check and add to hearder <robot> of .xacro files:
 xmlns:xacro="http://ros.org/wiki/xacro"
 
+- Stop service etherCAT
+sudo service ethercat stop
+
 - check EtherCAT slaves:
-sudo ~/slam_youbot/drivers/SOEM/install/bin/slaveinfo eth0
+sudo ~/slam_youbot/drivers/SOEM/install/bin/slaveinfo eth1
+
+- config file
+sudo nano /opt/ros/indigo/share/youbot_driver/config/youbot-ethercat.cfg
+
+export YOUBOT_CONFIG_FOLDER_LOCATION=~/slam_youbot/slam_ws/src/youbot_driver/config
+export YOUBOT_CONFIG_FOLDER_LOCATION=~/catkin_ws/src/youbot_driver/config
+
+sudo setcap cap_net_raw+ep ~/catkin_ws/devel/lib/youbot_driver_ros/youbot_driver_ros
+sudo setcap cap_net_raw+ep ~/catkin_ws/devel/lib/youbot_interface/youbot_interface
 
 
 

@@ -1,0 +1,9 @@
+
+-source code:
+https://sourceforge.net/p/etherlabmaster/code/ci/stable-1.5
+
+./bootstrap
+
+./configure --enable-generic --disable-e100 --disable-8139too
+--disable-e1000 --disable-r8169
+

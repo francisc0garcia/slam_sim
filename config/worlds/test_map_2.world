@@ -2119,56 +2119,7 @@
       </link>
       <pose frame=''>-1.86066 -3.72315 0 0 -0 0</pose>
     </model>
-    <model name='wood_slats'>
-      <static>1</static>
-      <link name='link'>
-        <collision name='collision'>
-          <geometry>
-            <mesh>
-              <uri>model://drc_practice_wood_slats/meshes/wood_slats.dae</uri>
-              <scale>1 1 1</scale>
-            </mesh>
-          </geometry>
-          <surface>
-            <bounce>
-              <restitution_coefficient>0.01</restitution_coefficient>
-              <threshold>5</threshold>
-            </bounce>
-            <friction>
-              <ode>
-                <mu>5</mu>
-                <mu2>5</mu2>
-              </ode>
-              <torsional>
-                <ode/>
-              </torsional>
-            </friction>
-            <contact>
-              <ode>
-                <soft_cfm>0.001</soft_cfm>
-                <kp>10000</kp>
-                <kd>1000</kd>
-                <max_vel>0.01</max_vel>
-                <min_depth>0.001</min_depth>
-              </ode>
-            </contact>
-          </surface>
-          <max_contacts>10</max_contacts>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <uri>model://drc_practice_wood_slats/meshes/wood_slats.dae</uri>
-              <scale>1 1 1</scale>
-            </mesh>
-          </geometry>
-        </visual>
-        <self_collide>0</self_collide>
-        <kinematic>0</kinematic>
-        <gravity>1</gravity>
-      </link>
-      <pose frame=''>4.02951 0.985162 0 0 -0 0</pose>
-    </model>
+
     <state world_name='default'>
       <sim_time>279 188000000</sim_time>
       <real_time>280 883149870</real_time>
@@ -2271,16 +2222,6 @@
         </link>
         <link name='Wall_9'>
           <pose frame=''>-0.903761 2.31114 0 0 -0 1.5708</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name='wood_slats'>
-        <pose frame=''>4.02951 0.985162 0 0 -0 0</pose>
-        <scale>1 1 1</scale>
-        <link name='link'>
-          <pose frame=''>4.02951 0.985162 0 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>

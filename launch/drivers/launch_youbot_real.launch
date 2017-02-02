@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- launch youbot_driver -->
+    <include file="$(find youbot_driver_ros_interface)/launch/youbot_driver.launch" />
+
+    <!-- launch hokuyo node -->
+    <include file="$(find youbot_navigation_common)/launch/base_front_hokuyo_node.launch" />
+
+</launch>
