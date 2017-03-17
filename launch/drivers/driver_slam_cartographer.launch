@@ -1,0 +1,18 @@
+<launch>
+    <arg name="configuration_directory"   default="$(find slam_sim)/config/cartographer" />
+    <arg name="configuration_basename"   default="youbot_cartographer.lua" />
+
+    <!--
+    <node name="robot_state_publisher_cartographer" pkg="robot_state_publisher" type="robot_state_publisher" />
+    -->
+
+    <!-- launch Cartographer node -->
+    <node name="cartographer_node" pkg="cartographer_ros" required="true"
+          type="cartographer_node" args="
+          -configuration_directory $(arg configuration_directory)
+          -configuration_basename $(arg configuration_basename)"
+          output="screen">
+        <remap from="scan" to="/base_scan" />
+        <remap from="map" to="map_carto"/>
+    </node>
+</launch>

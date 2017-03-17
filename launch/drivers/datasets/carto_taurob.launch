@@ -1,0 +1,64 @@
+<!--
+  Copyright 2016 The Cartographer Authors
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<launch>
+    <arg name="bag_folder" default="/home/pach0/Documents/MasterThesis/datasets/cartographer/"/>
+    <arg name="bag_filename" default="taurob_tracker_simulation.bag"/>
+    <arg name="use_default_rviz" default="true"/>
+
+    <param name="/use_sim_time" value="true"/>
+
+    <node name="cartographer_node" pkg="cartographer_ros"
+          type="cartographer_node" args="
+          -configuration_directory $(find cartographer_ros)/configuration_files
+          -configuration_basename taurob_tracker.lua"
+          output="screen">
+        <remap from="scan" to="/spin_laser/scan" />
+        <remap from="imu" to="/imu/data" />
+    </node>
+
+    <!-- run pointcloud_to_laserscan node -->
+    <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan">
+        <remap from="cloud_in" to="/scan_matched_points2"/>
+        <remap from="scan" to="base_scan"/>
+        <rosparam>
+            #target_frame: # Leave disabled to output scan in pointcloud frame
+            transform_tolerance: 0.01
+            min_height: -1.0
+            max_height: 3.0
+
+            angle_min: -3.1415 # -M_PI/2
+            angle_max: 3.1415 # M_PI/2
+            angle_increment: 0.0044 # M_PI/360.0/2.0
+            scan_time: 0.05
+            range_min: 0.10
+            range_max: 20.0
+            use_inf: true
+
+            # Concurrency level, affects number of pointclouds queued for processing and number of threads used
+            # 0 : Detect number of cores
+            # 1 : Single threaded
+            # 2->inf : Parallelism level
+            concurrency_level: 0
+        </rosparam>
+    </node>
+
+    <node unless="$(arg use_default_rviz)" name="rviz_taurob" pkg="rviz" type="rviz" required="true"
+          args="-d $(find cartographer_ros)/configuration_files/demo_3d.rviz"/>
+
+    <node name="playbag" pkg="rosbag" type="play"
+          args="--clock $(arg bag_folder)$(arg bag_filename)" />
+</launch>

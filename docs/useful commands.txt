@@ -15,7 +15,7 @@ roslaunch slam_sim launch_sim_gmapping.launch map_name:=test_map_2.world
 roslaunch slam_sim launch_sim_cartographer.launch map_name:=test_map_1.world
 roslaunch slam_sim launch_sim_cartographer.launch map_name:=test_map_2.world
 
-roslaunch slam_sim launch_sim_both_carto_gmap.launch map_name:=test_map_1.world
+roslaunch slam_--|sim launch_sim_both_carto_gmap.launch map_name:=test_map_1.world
 roslaunch slam_sim launch_sim_both_carto_gmap.launch map_name:=test_map_2.world
 
 
@@ -33,6 +33,7 @@ roslaunch mrpt_localization demo.launch
 SLAM:
 roslaunch mrpt_icp_slam_2d icp_slam.launch
 roslaunch mrpt_icp_slam_2d icp_slam_rawlog.launch
+roslaunch mrpt_graphslam_2d sr_graphslam_demo.launch
 roslaunch mrpt_rbpf_slam rbpf_slam.launch
 
 -- Launch hector mapping
@@ -40,7 +41,9 @@ roslaunch mrpt_rbpf_slam rbpf_slam.launch
 roslaunch hector_slam_launch tutorial.launch
 rosbag play Team_Hector_MappingBox_RoboCup_2011_Rescue_Arena.bag  --clock
 
+-- Launch openKarto: slam_karto
 
+roslaunch slam_karto karto_stage.launch
 
 
 -- Launch PC

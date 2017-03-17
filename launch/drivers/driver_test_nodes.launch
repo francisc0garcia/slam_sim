@@ -1,0 +1,16 @@
+<launch>
+    <arg name="use_default_rviz"   default="true"/>
+
+    <node  pkg="slam_sim" name="laser_scan_test" required="false"
+          type="laser_scan_test"     output="screen">
+        <remap from="scan" to="/base_scan" />
+    </node>
+
+    <group unless="$(arg use_default_rviz)">
+        <!-- launch rviz -->
+        <node name="rviz_default_test" pkg="rviz" type="rviz"
+              args="-d $(find slam_sim)/config/rviz_slam_test_nodes.rviz" required="false" />
+
+    </group>
+
+</launch>

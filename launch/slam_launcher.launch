@@ -1,0 +1,69 @@
+<launch>
+    <!-- Select one data set (key - description): -->
+    <arg name="use_carto_2d_backpack"   default="false"/> <!-- Deutsches museum, the 2D backpack example bag. -->
+    <arg name="use_carto_3d_backpack"   default="false"/> <!-- the 3D backpack example bag -->
+    <arg name="use_carto_revo_lds"      default="false"/> <!-- the Revo LDS example bag. -->
+    <arg name="use_carto_pr2"           default="false"/> <!-- the PR2 example bag -->
+    <arg name="use_carto_taurob"        default="false"/> <!-- the Taurob Tracker example bag. -->
+
+    <!-- does not work jet! -->
+    <arg name="use_hector_rescue_arena" default="false"/> <!-- RoboCup 2011 Rescue Arena dataset -->
+    <arg name="use_hector_schloss"      default="false"/> <!-- Schloss Dagstuhl Neubau dataset -->
+    <arg name="use_hector_german_open"  default="false"/> <!-- RoboCup German Open 2011 Rescue Arena dataset -->
+    <arg name="use_hector_building"     default="false"/> <!-- TU Darmstadt building L101 dataset -->
+
+    <arg name="use_uni_fri_intel"       default="false"/> <!-- Intel Research Lab (Seattle) by Dirk Hähnel -->
+    <arg name="use_uni_fri_aces"        default="false"/> <!-- ACES Building (Austin) by Patrick Beeson -->
+    <arg name="use_uni_fri_mit_killian" default="false"/> <!-- 2 MIT Killian Court (2D) by Mike Bosse and John Leonard -->
+    <arg name="use_uni_fri_mit_csail"   default="false"/> <!-- MIT CSAIL Building by Cyrill Stachniss -->
+    <arg name="use_uni_fri_building"    default="false"/> <!-- Freiburg Indoor Building 079 by Cyrill Stachniss -->
+
+    <!-- Select one SLAM algorithm (key - description): -->
+    <arg name="use_gmapping"            default="false"/>
+    <arg name="use_cartographer"        default="false"/> <!-- only use when no data set is selected! -->
+
+    <!-- Select one World (optional) (key - description): -->
+    <arg name="use_empty_world"         default="false"/>  <!-- void environment - for testing datasets -->
+    <arg name="use_dynamic_simple"      default="false"/> <!-- World with few moving robots -->
+    <arg name="use_static_map_1"        default="false"/> <!-- static small map -->
+    <arg name="use_static_map_2"        default="true"/> <!-- static big map -->
+
+    <!-- Config options -->
+    <arg name="use_kuka_robot"          default="true"/> <!-- static big map -->
+    <arg name="use_default_rviz"        default="false"/> <!-- Force default RVIZ interface, if false, it will load depending of data set -->
+    <arg name="use_gazebo_sim"          default="true"/> <!-- launches gazebo simulator -->
+    <arg name="use_test_nodes"          default="true"/> <!-- launches gazebo simulator -->
+
+    <!-- Launch data set + algorithm + map -->
+    <include file="$(find slam_sim)/launch/slam_controller.launch" >
+        <arg name="use_carto_2d_backpack" value="$(arg use_carto_2d_backpack)"/>
+        <arg name="use_carto_3d_backpack" value="$(arg use_carto_3d_backpack)"/>
+        <arg name="use_carto_revo_lds" value="$(arg use_carto_revo_lds)"/>
+        <arg name="use_carto_pr2" value="$(arg use_carto_pr2)"/>
+        <arg name="use_carto_taurob" value="$(arg use_carto_taurob)"/>
+
+        <arg name="use_hector_rescue_arena" value="$(arg use_hector_rescue_arena)"/>
+        <arg name="use_hector_schloss" value="$(arg use_hector_schloss)"/>
+        <arg name="use_hector_german_open" value="$(arg use_hector_german_open)"/>
+        <arg name="use_hector_building" value="$(arg use_hector_building)"/>
+
+        <arg name="use_uni_fri_intel" value="$(arg use_uni_fri_intel)"/>
+        <arg name="use_uni_fri_aces" value="$(arg use_uni_fri_aces)"/>
+        <arg name="use_uni_fri_mit_killian" value="$(arg use_uni_fri_mit_killian)"/>
+        <arg name="use_uni_fri_mit_csail" value="$(arg use_uni_fri_mit_csail)"/>
+        <arg name="use_uni_fri_building" value="$(arg use_uni_fri_building)"/>
+
+        <arg name="use_gmapping" value="$(arg use_gmapping)"/>
+        <arg name="use_cartographer" value="$(arg use_cartographer)"/>
+        <arg name="use_empty_world" value="$(arg use_empty_world)"/>
+        <arg name="use_dynamic_simple" value="$(arg use_dynamic_simple)"/>
+        <arg name="use_static_map_1" value="$(arg use_static_map_1)"/>
+        <arg name="use_static_map_2" value="$(arg use_static_map_2)"/>
+
+        <arg name="use_kuka_robot" value="$(arg use_kuka_robot)"/>
+        <arg name="use_default_rviz" value="$(arg use_default_rviz)"/>
+        <arg name="use_gazebo_sim" value="$(arg use_gazebo_sim)"/>
+        <arg name="use_test_nodes" value="$(arg use_test_nodes)"/>
+    </include>
+
+</launch>

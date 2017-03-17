@@ -1,0 +1,115 @@
+<launch>
+    <!-- Please use slam_launcher for more details about algorithms and data sets  -->
+    <arg name="use_carto_2d_backpack"   default="false"/>
+    <arg name="use_carto_3d_backpack"   default="false"/>
+    <arg name="use_carto_revo_lds"      default="false"/>
+    <arg name="use_carto_pr2"           default="false"/>
+    <arg name="use_carto_taurob"        default="false"/>
+
+    <arg name="use_hector_rescue_arena" default="false"/>
+    <arg name="use_hector_schloss"      default="false"/>
+    <arg name="use_hector_german_open"  default="false"/>
+    <arg name="use_hector_building"     default="false"/>
+
+    <arg name="use_uni_fri_intel"       default="false"/>
+    <arg name="use_uni_fri_aces"        default="false"/>
+    <arg name="use_uni_fri_mit_killian" default="false"/>
+    <arg name="use_uni_fri_mit_csail"   default="false"/>
+    <arg name="use_uni_fri_building"    default="false"/>
+
+    <arg name="use_gmapping"            default="false"/>
+    <arg name="use_cartographer"        default="false"/>
+    <arg name="use_empty_world"         default="false"/>
+    <arg name="use_dynamic_simple"      default="false"/>
+    <arg name="use_static_map_1"        default="false"/>
+    <arg name="use_static_map_2"        default="false"/>
+
+    <arg name="use_kuka_robot"          default="false"/>
+    <arg name="use_default_rviz"        default="false"/>
+    <arg name="use_gazebo_sim"          default="false"/>
+    <arg name="use_test_nodes"          default="false"/>
+
+    <!-- launch Teleop - joy node -->
+    <include file="$(find teleop_twist_joy)/launch/teleop.launch" />
+
+    <!-- launch map: launch gazebo world-->
+    <include if="$(arg use_gazebo_sim)" file="$(find slam_sim)/launch/drivers/driver_launch_gazebo_map.launch">
+        <arg name="world_name" if="$(arg use_empty_world)" value="$(find slam_sim)/worlds/empty_world.world"/>
+        <arg name="world_name" if="$(arg use_dynamic_simple)" value="$(find slam_sim)/worlds/dynamic_slam_simple.world"/>
+        <arg name="world_name" if="$(arg use_static_map_1)" value="$(find slam_sim)/worlds/test_map_1.world"/>
+        <arg name="world_name" if="$(arg use_static_map_2)" value="$(find slam_sim)/worlds/test_map_2.world"/>
+    </include>
+
+    <!-- launch data set -->
+    <include if="$(arg use_carto_2d_backpack)" file="$(find slam_sim)/launch/drivers/datasets/carto_backpack_2d.launch" >
+        <arg name="use_default_rviz" value="$(arg use_default_rviz)"/>
+    </include>
+    <include if="$(arg use_carto_3d_backpack)" file="$(find slam_sim)/launch/drivers/datasets/carto_backpack_3d.launch" >
+        <arg name="use_default_rviz" value="$(arg use_default_rviz)"/>
+    </include>
+    <include if="$(arg use_carto_revo_lds)" file="$(find slam_sim)/launch/drivers/datasets/carto_revo_lds.launch" >
+        <arg name="use_default_rviz" value="$(arg use_default_rviz)"/>
+    </include>
+    <include if="$(arg use_carto_pr2)" file="$(find slam_sim)/launch/drivers/datasets/carto_pr2.launch" >
+        <arg name="use_default_rviz" value="$(arg use_default_rviz)"/>
+    </include>
+    <include if="$(arg use_carto_taurob)" file="$(find slam_sim)/launch/drivers/datasets/carto_taurob.launch" >
+        <arg name="use_default_rviz" value="$(arg use_default_rviz)"/>
+    </include>
+
+    <include if="$(arg use_hector_rescue_arena)" file="$(find slam_sim)/launch/drivers/datasets/hector_rescue_arena.launch" >
+        <arg name="use_default_rviz" value="$(arg use_default_rviz)"/>
+    </include>
+
+    <include if="$(arg use_uni_fri_intel)" file="$(find slam_sim)/launch/drivers/datasets/default_bag.launch" >
+        <arg name="bag_folder" value="/home/pach0/Documents/MasterThesis/datasets/uni-freiburg/bags/"/>
+        <arg name="bag_filename" value="intel.bag"/>
+        <arg name="use_default_rviz" value="$(arg use_default_rviz)"/>
+    </include>
+    <include if="$(arg use_uni_fri_aces)" file="$(find slam_sim)/launch/drivers/datasets/default_bag.launch" >
+        <arg name="bag_folder" value="/home/pach0/Documents/MasterThesis/datasets/uni-freiburg/bags/"/>
+        <arg name="bag_filename" value="aces.bag"/>
+        <arg name="use_default_rviz" value="$(arg use_default_rviz)"/>
+    </include>
+    <include if="$(arg use_uni_fri_mit_killian)" file="$(find slam_sim)/launch/drivers/datasets/default_bag.launch" >
+        <arg name="bag_folder" value="/home/pach0/Documents/MasterThesis/datasets/uni-freiburg/bags/"/>
+        <arg name="bag_filename" value="mit-killian.bag"/>
+        <arg name="use_default_rviz" value="$(arg use_default_rviz)"/>
+    </include>
+    <include if="$(arg use_uni_fri_mit_csail)" file="$(find slam_sim)/launch/drivers/datasets/default_bag.launch" >
+        <arg name="bag_folder" value="/home/pach0/Documents/MasterThesis/datasets/uni-freiburg/bags/"/>
+        <arg name="bag_filename" value="mit-csail.bag"/>
+        <arg name="use_default_rviz" value="$(arg use_default_rviz)"/>
+    </include>
+    <include if="$(arg use_uni_fri_building)" file="$(find slam_sim)/launch/drivers/datasets/default_bag.launch" >
+        <arg name="bag_folder" value="/home/pach0/Documents/MasterThesis/datasets/uni-freiburg/bags/"/>
+        <arg name="bag_filename" value="fr079.bag"/>
+        <arg name="use_default_rviz" value="$(arg use_default_rviz)"/>
+    </include>
+
+    <!-- launch Robot -->
+    <include if="$(arg use_kuka_robot)" file="$(find slam_sim)/launch/drivers/driver_launch_youbot.launch">
+        <arg name="init_pos_x" value="0.0"/>
+        <arg name="init_pos_y" value="0.0"/>
+        <arg name="init_pos_z" value="0.0"/>
+    </include>
+
+    <!-- Launch SLAM algorithm -->
+    <include if="$(arg use_gmapping)" file="$(find slam_sim)/launch/drivers/driver_slam_gmapping.launch" />
+    <include if="$(arg use_cartographer)" file="$(find slam_sim)/launch/drivers/driver_slam_cartographer.launch" />
+
+    <!-- launch test nodes -->
+    <include if="$(arg use_test_nodes)" file="$(find slam_sim)/launch/drivers/driver_test_nodes.launch" >
+        <arg name="use_default_rviz" value="$(arg use_default_rviz)"/>
+    </include>
+
+    <group if="$(arg use_default_rviz)">
+        <!-- launch rviz -->
+        <node name="rviz_default" pkg="rviz" type="rviz"
+              args="-d $(find slam_sim)/config/rviz_slam_sim.rviz" required="false" />
+
+        <!-- launch rqt -->
+        <node name="slam_sim_rqt_perspective" pkg="rqt_gui" type="rqt_gui"
+              args="--perspective-file  $(find slam_sim)/config/rqt_slam_sim.perspective" />
+    </group>
+</launch>

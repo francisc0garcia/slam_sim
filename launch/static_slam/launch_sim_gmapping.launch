@@ -2,15 +2,11 @@
 <launch>
     <env name="GAZEBO_MODEL_PATH" value="$(find slam_sim)/models"/>
 
-    <arg name="map_name" default="test_map_1.world"/>
-
     <!-- launch Teleop - joy node -->
     <include file="$(find teleop_twist_joy)/launch/teleop.launch" />
 
-    <!-- launch gazebo world-->
-    <include file="$(find slam_sim)/launch/drivers/driver_launch_gazebo_map.launch">
-        <arg name="world_name" value="$(find slam_sim)/config/worlds/$(arg map_name)"/>
-    </include>
+    <!-- launch map-->
+    <include file="$(find slam_sim)/launch/drivers/driver_load_map.launch" />
 
     <!-- launch Robot -->
     <include file="$(find slam_sim)/launch/drivers/driver_launch_youbot.launch">
