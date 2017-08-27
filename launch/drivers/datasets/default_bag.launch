@@ -1,5 +1,5 @@
 <launch>
-    <arg name="bag_folder"   default="/home/pach0/Documents/MasterThesis/datasets/cartographer/"/>
+    <arg name="bag_folder"   default="/home/pach0/Documents/MasterThesisSLAM/datasets/cartographer/"/>
     <arg name="bag_filename"   default="cartographer_paper_deutsches_museum.bag"/>
     <arg name="use_default_rviz"   default="true"/>
 

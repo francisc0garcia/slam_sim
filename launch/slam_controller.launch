@@ -40,6 +40,10 @@
         <arg name="world_name" if="$(arg use_static_map_2)" value="$(find slam_sim)/worlds/test_map_2.world"/>
     </include>
 
+    <!-- Dynamic world -->
+    <node if="$(arg use_dynamic_simple)" name="dyn_slam_robot_move" pkg="slam_sim"
+          type="dyn_slam_robot_move.py"     required="false" />
+
     <!-- launch data set -->
     <include if="$(arg use_carto_2d_backpack)" file="$(find slam_sim)/launch/drivers/datasets/carto_backpack_2d.launch" >
         <arg name="use_default_rviz" value="$(arg use_default_rviz)"/>

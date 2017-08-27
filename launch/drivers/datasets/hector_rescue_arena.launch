@@ -1,5 +1,5 @@
 <launch>
-    <arg name="bag_folder"   default="/home/pach0/Documents/MasterThesis/datasets/hector_mapping/"/>
+    <arg name="bag_folder"   default="/home/pach0/Documents/MasterThesisSLAM/datasets/hector_mapping/"/>
     <arg name="bag_filename"   default="Team_Hector_MappingBox_RoboCup_2011_Rescue_Arena.bag"/>
     <arg name="use_default_rviz"   default="true"/>
 

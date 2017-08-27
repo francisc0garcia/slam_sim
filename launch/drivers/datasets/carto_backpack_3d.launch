@@ -15,7 +15,7 @@
 -->
 
 <launch>
-    <arg name="bag_folder" default="/home/pach0/Documents/MasterThesis/datasets/cartographer/"/>
+    <arg name="bag_folder" default="/home/pach0/Documents/MasterThesisSLAM/datasets/cartographer/"/>
     <arg name="bag_filename" default="b3-2016-04-05-14-14-00.bag"/>
     <arg name="use_default_rviz"   default="true"/>
 

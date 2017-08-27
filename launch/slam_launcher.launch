@@ -1,4 +1,6 @@
 <launch>
+    <env name="GAZEBO_MODEL_PATH" value="$(find slam_sim)/models"/>
+
     <!-- Select one data set (key - description): -->
     <arg name="use_carto_2d_backpack"   default="false"/> <!-- Deutsches museum, the 2D backpack example bag. -->
     <arg name="use_carto_3d_backpack"   default="false"/> <!-- the 3D backpack example bag -->
@@ -19,20 +21,20 @@
     <arg name="use_uni_fri_building"    default="false"/> <!-- Freiburg Indoor Building 079 by Cyrill Stachniss -->
 
     <!-- Select one SLAM algorithm (key - description): -->
-    <arg name="use_gmapping"            default="false"/>
-    <arg name="use_cartographer"        default="false"/> <!-- only use when no data set is selected! -->
+    <arg name="use_gmapping"            default="true"/>
+    <arg name="use_cartographer"        default="true"/> <!-- only use when no data set is selected! -->
 
     <!-- Select one World (optional) (key - description): -->
     <arg name="use_empty_world"         default="false"/>  <!-- void environment - for testing datasets -->
-    <arg name="use_dynamic_simple"      default="false"/> <!-- World with few moving robots -->
-    <arg name="use_static_map_1"        default="false"/> <!-- static small map -->
-    <arg name="use_static_map_2"        default="true"/> <!-- static big map -->
+    <arg name="use_dynamic_simple"      default="true"/> <!-- World with few moving robots -->
+    <arg name="use_static_map_1"        default="false"/> <!-- static big  map -->
+    <arg name="use_static_map_2"        default="false"/> <!-- static small map -->
 
     <!-- Config options -->
     <arg name="use_kuka_robot"          default="true"/> <!-- static big map -->
-    <arg name="use_default_rviz"        default="false"/> <!-- Force default RVIZ interface, if false, it will load depending of data set -->
+    <arg name="use_default_rviz"        default="true"/> <!-- Force default RVIZ interface, if false, it will load depending of data set -->
     <arg name="use_gazebo_sim"          default="true"/> <!-- launches gazebo simulator -->
-    <arg name="use_test_nodes"          default="true"/> <!-- launches gazebo simulator -->
+    <arg name="use_test_nodes"          default="false"/> <!-- launches gazebo simulator -->
 
     <!-- Launch data set + algorithm + map -->
     <include file="$(find slam_sim)/launch/slam_controller.launch" >

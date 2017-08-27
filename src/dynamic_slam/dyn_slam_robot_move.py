@@ -10,7 +10,6 @@ from geometry_msgs.msg import Twist
 
 
 class robot_move_test:
-
     def __init__(self):
         # Init ros node
         rospy.init_node('robot_cmd_vel')
@@ -46,6 +45,8 @@ class robot_move_test:
 
                 self.move_backward()
                 time.sleep(5)
+            else:
+                self.stop_robot()
 
             self.rate.sleep()
 
@@ -109,15 +110,18 @@ class robot_move_test:
     def process_twist_message(self, twist_msg):
         if twist_msg.linear.x > 0:
             self.enable_controller = True
+        else:
+            self.enable_controller = False
+
 
 def main(args):
-
     ic = robot_move_test()
     rospy.init_node('move_robot_test', anonymous=True)
     try:
         rospy.spin()
     except KeyboardInterrupt:
         print("Shutting down")
+
 
 if __name__ == '__main__':
     main(sys.argv)
